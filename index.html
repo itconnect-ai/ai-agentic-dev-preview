@@ -54,9 +54,9 @@
             
             <div class="preset-triggers">
               <span class="preset-label">🎯 시연용 추천 템플릿:</span>
-              <button class="chip" onclick="setPreset('habit')">🔥 습관 트래커 App</button>
-              <button class="chip" onclick="setPreset('kanban')">📋 AI 칸반 보드</button>
-              <button class="chip" onclick="setPreset('crypto')">📈 코인 대시보드</button>
+              <button class="chip active" data-scenario="habit">🔥 습관 트래커 App</button>
+              <button class="chip" data-scenario="kanban">📋 AI 칸반 보드</button>
+              <button class="chip" data-scenario="crypto">📈 코인 대시보드</button>
             </div>
 
             <button id="startAgenticBtn" class="btn btn-primary btn-glow">
@@ -117,7 +117,8 @@
 
       <!-- 중앙 및 우측: 프로세스 실행 뷰 -->
       <section class="main-content">
-        <!-- 단계별 프로그레스 스텝 바 -->
+        <!-- 단계별 프로그레스 스텝 바 + 재생 컨트롤 -->
+        <div class="pipeline-row">
         <div class="pipeline-stepper">
           <div class="step active" id="step1">
             <div class="step-num">1</div>
@@ -143,6 +144,16 @@
             <div class="step-num">5</div>
             <div class="step-title">최종 앱 완공</div>
           </div>
+        </div>
+        <div class="playback-controls">
+          <button id="pauseBtn" class="ctrl-btn" disabled>⏸ 일시정지</button>
+          <div class="speed-group">
+            <button class="ctrl-btn speed-btn" data-speed="0.5">0.5x</button>
+            <button class="ctrl-btn speed-btn active" data-speed="1">1x</button>
+            <button class="ctrl-btn speed-btn" data-speed="2">2x</button>
+          </div>
+          <button id="resetBtn" class="ctrl-btn">⟳ 리셋</button>
+        </div>
         </div>
 
         <!-- 파티션 그리드 뷰 -->
@@ -182,14 +193,21 @@
                 </div>
               </div>
 
-              <!-- Tab 2: 코드 생성 스트림 -->
+              <!-- Tab 2: 코드 생성 스트림 (에이전트별 듀얼 창 병렬 타이핑) -->
               <div class="tab-pane" id="codeStreamView">
-                <div class="code-editor-window">
-                  <div class="code-editor-header">
-                    <span class="file-tab" id="activeFileTab">HabitTracker.js</span>
-                    <span class="code-status-badge" id="codeStatusBadge">작성 중...</span>
+                <div class="code-stream" id="codeStream">
+                  <div class="empty-state" id="codeEmptyState">
+                    <span class="empty-icon">💻</span>
+                    <p>코드 생성 단계가 시작되면 서브에이전트들이 각자의 파일을 병렬로 작성하는 모습이 실시간 스트리밍됩니다.</p>
                   </div>
-                  <pre class="code-content" id="codeContent"><code>// 에이전트가 코드를 작성하기 시작하면 실시간 스트리밍됩니다.</code></pre>
+                  <div class="code-window hidden" id="codeWindow0">
+                    <div class="code-window-header"><span class="agent-badge"></span><span class="code-filename"></span><span class="code-status" id="codeStatus0">작성 중...</span></div>
+                    <pre class="code-area"><code></code></pre>
+                  </div>
+                  <div class="code-window hidden" id="codeWindow1">
+                    <div class="code-window-header"><span class="agent-badge"></span><span class="code-filename"></span><span class="code-status" id="codeStatus1">작성 중...</span></div>
+                    <pre class="code-area"><code></code></pre>
+                  </div>
                 </div>
               </div>
 
@@ -233,6 +251,7 @@
     </main>
   </div>
 
+  <script src="scenarios.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
