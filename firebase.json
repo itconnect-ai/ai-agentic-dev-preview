@@ -1,0 +1,13 @@
+{
+  "hosting": {
+    "site": "ai-agentic-dev",
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      ".firebaserc",
+      "**/.*",
+      "**/node_modules/**",
+      "docs/**"
+    ]
+  }
+}
