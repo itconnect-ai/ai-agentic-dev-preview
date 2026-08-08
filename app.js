@@ -139,15 +139,18 @@ const TICK_MS = 50;
 const ABORTED = Symbol('aborted');
 
 // 모든 연출 대기의 단일 게이트: speed 배율·pause·리셋(runToken) 일괄 처리
+// 첫 판정도 반드시 실제 TICK_MS 경과 후에 한다 — 즉시 판정하면 50ms 이하
+// 대기(타이핑 틱)가 지연 0으로 해소되어 애니메이션이 한 번에 쏟아진다.
 function wait(ms, token) {
   return new Promise((resolve, reject) => {
     let elapsed = 0;
-    (function tick() {
+    function tick() {
       if (token !== runToken) return reject(ABORTED);
       if (!paused) elapsed += TICK_MS * speed;
       if (elapsed >= ms) return resolve();
       setTimeout(tick, TICK_MS);
-    })();
+    }
+    setTimeout(tick, TICK_MS);
   });
 }
 
@@ -323,12 +326,12 @@ function resetAll() {
 
 // --- Timing (1x 기준, ms) — 촬영 리허설 후 여기서만 조정 ---
 const T = {
-  promptIn: 1000, planStart: 1400, planSection: 3400, planDone: 1800,
-  delegateIntro: 900, wireUp: 800, agentIntro: 1600,
-  codeIntro: 1400, charTick: 45, codeChunk: 3, patchChunk: 8, segmentSize: 130, midLog: 1400,
-  testIntro: 1200, testNav: 1600, testStep: 1900, failDwell: 2600,
-  healOrch: 1300, healSwitch: 800, rerun: 1500,
-  passLine: 900, badgeDwell: 2200, finale: 2400,
+  promptIn: 1000, planStart: 1400, planSection: 4000, planDone: 2200,
+  delegateIntro: 900, wireUp: 800, agentIntro: 2000,
+  codeIntro: 1400, charTick: 45, codeChunk: 2, patchChunk: 8, segmentSize: 130, midLog: 1800,
+  testIntro: 1600, testNav: 2000, testStep: 2400, failDwell: 3200,
+  healOrch: 1800, healSwitch: 800, rerun: 2000,
+  passLine: 900, badgeDwell: 2800, finale: 3000,
 };
 
 // 코드 타이핑: speed에 비례해 chunk 크기를 키워 tick 하한(50ms)에도 체감 속도 유지
