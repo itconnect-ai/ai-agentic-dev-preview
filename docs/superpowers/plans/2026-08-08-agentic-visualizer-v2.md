@@ -1,5 +1,15 @@
 # Agentic Visualizer v2 Implementation Plan
 
+> **적응 기록 (2026-08-08 실행 중 반영):** 계획 수립 직후 외부 편집으로 v1.5(한국어 UI,
+> SoundFX 효과음, 카드 셰이크, 레이저 토폴로지 3노드, Self-Healing 패치 코드 재타이핑 연출)가
+> 커밋 베이스라인이 되어, 아래 사항을 계획에서 조정해 구현했다:
+> - DOM 계약: `laser1~3`(구 line1~4), Planner 노드 없음, `statusUI/statusLogic/statusQA` 텍스트, `previewCard` 셰이크
+> - 시나리오 스키마에 `test.failure.patchedCode` 추가 — 자가치유 시 dev 창에 패치 코드 재타이핑 (v1.5 연출 계승)
+> - 초기 코드에 실제 버그가 존재하도록 수정(습관: null 가드 없음 등) — 치유 드라마 정합성
+> - v1.5 SoundFX·한국어 대사 톤 전체 보존, 에이전트 표시명 한국어화
+> - 검증은 수동 체크리스트 대신 Playwright 자동 드라이버(35항목)로 수행, 스크린샷 육안 확인 병행
+> - 발견 버그: `wait()` 첫 판정이 즉시 실행되어 50ms 이하 대기가 지연 0으로 해소 → 첫 판정도 tick 경과 후로 수정
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** 영상 촬영용 AI Agentic Development 시뮬레이터 v2 — 시나리오 3종 완전 지원, 코드 타이핑 스트림, 재생 컨트롤(속도/일시정지/리셋).
