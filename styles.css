@@ -849,3 +849,184 @@ body {
 .live-app-container {
   height: 100%;
 }
+
+/* ===== v2 additions ===== */
+
+/* 1) 파이프라인 행 + 재생 컨트롤 */
+.pipeline-row {
+  display: flex;
+  align-items: stretch;
+  gap: 12px;
+}
+
+.pipeline-row .pipeline-stepper {
+  flex: 1;
+}
+
+.playback-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  padding: 12px 16px;
+  border-radius: 14px;
+}
+
+.ctrl-btn {
+  background: #182238;
+  color: var(--text-muted);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 7px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+
+.ctrl-btn:hover:not(:disabled) {
+  border-color: var(--primary);
+  color: #fff;
+  box-shadow: 0 0 10px var(--primary-glow);
+}
+
+.ctrl-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.speed-group {
+  display: flex;
+  gap: 2px;
+}
+
+.speed-btn.active {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+
+/* 2) 듀얼 코드 스트림 창 */
+.code-stream {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 100%;
+  overflow: hidden;
+}
+
+.code-stream .empty-state {
+  flex: 1;
+}
+
+.code-window {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: #0b1120;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.code-window.hidden {
+  display: none;
+}
+
+.code-window-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: rgba(30, 41, 59, 0.7);
+  border-bottom: 1px solid var(--border-color);
+  font-size: 12px;
+}
+
+.agent-badge {
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 11px;
+}
+
+.agent-badge.ui {
+  background: rgba(192, 132, 252, 0.18);
+  color: #c084fc;
+}
+
+.agent-badge.dev {
+  background: rgba(251, 191, 36, 0.18);
+  color: #fbbf24;
+}
+
+.code-filename {
+  font-family: 'Fira Code', monospace;
+  color: #94a3b8;
+}
+
+.code-status {
+  margin-left: auto;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent-cyan);
+}
+
+.code-status.done {
+  color: #34d399;
+}
+
+.code-status.healing {
+  color: var(--accent-orange);
+}
+
+.code-area {
+  flex: 1;
+  margin: 0;
+  padding: 12px 14px;
+  overflow-y: auto;
+  font-family: 'Fira Code', monospace;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #dbeafe;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.code-window.typing .code-area code::after {
+  content: '▌';
+  color: var(--primary);
+  animation: blinkCursor 0.7s steps(1) infinite;
+}
+
+@keyframes blinkCursor {
+  50% { opacity: 0; }
+}
+
+/* 3) 기획서 섹션 페이드인 */
+.plan-section {
+  animation: fadeSlideIn 0.6s ease both;
+}
+
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* 4) 시나리오 칩 활성/비활성 상태 */
+.chip.active {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+  box-shadow: 0 0 10px var(--primary-glow);
+}
+
+.chip:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
