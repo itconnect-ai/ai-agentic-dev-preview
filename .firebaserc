@@ -1,5 +1,14 @@
 {
   "projects": {
-    "default": "ai-agentic-dev"
+    "default": "ax-consulting"
+  },
+  "targets": {
+    "ax-consulting": {
+      "hosting": {
+        "agentic": [
+          "itconnect-agentic-dev"
+        ]
+      }
+    }
   }
 }
